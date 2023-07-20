@@ -49,7 +49,11 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByEmail(String email) {
         TypedQuery<User> query = entityManager.createQuery("select u from User u JOIN FETCH u.roles where u.email = :email", User.class);
         query.setParameter("email", email);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
